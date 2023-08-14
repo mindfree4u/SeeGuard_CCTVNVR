@@ -3,6 +3,7 @@ package com.company.netsdk.module;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
+import android.util.Log;
 
 public class IPLoginModuleBridge extends ReactContextBaseJavaModule {
 
@@ -20,10 +21,11 @@ public class IPLoginModuleBridge extends ReactContextBaseJavaModule {
         IPLoginModule ipLoginModule = new IPLoginModule();
         boolean loginResult = ipLoginModule.login(address, port, username, password);
 
-        // Handle the login result and notify the JavaScript side
-        // For example, you can use React Native's native module methods like
-        // promise.resolve(loginResult) or promise.reject(error) to communicate
-        // the result back to JavaScript.
+        if (loginResult) {
+            Log.d("IP login", "IPlogin 성공");
+        } else {
+            Log.d("IP login", "IPlogin 실패"); // 실패 시
+        }
     }
 
     @ReactMethod

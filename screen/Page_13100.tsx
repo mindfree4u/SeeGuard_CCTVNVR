@@ -13,17 +13,17 @@ const Page_13100 = ({ navigation, route }) => {
   const [nickname, setNickname] = React.useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const placeholderTextColor = port ?  '#000000' : '#D9D9D9' ;                   // port 값을 받았는지 여부에 따라 placeholder 색상을 설정
-
+  const { IPLoginModule } = NativeModules;
 
   // 추가 버튼 클릭시 호출됨
 const handleAdd = () => {
-//IPLoginModule.login("106.250.19.243", "37777", "admin", "1q2w3e4r!@#$");
+
 const address = '106.250.19.243';
 const port = '37777';
 const username = 'admin';
 const password = '1q2w3e4r!@#$';
 
-NativeModules.IPLoginModule.login(address, port, username, password);
+IPLoginModule.login(address, port, username, password);
 
 
 navigation.navigate('Page_10000');
