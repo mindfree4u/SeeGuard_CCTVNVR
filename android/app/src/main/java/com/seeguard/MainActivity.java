@@ -28,8 +28,15 @@ public class MainActivity extends ReactActivity {
     }).start();
     NetSDKLib.getInstance().TestopenLog();
     //setupView();
+
   }
 
+  @Override
+  protected void onDestroy() {
+    // while exiting the application, please make sure to invoke cleanup.
+    NetSDKLib.getInstance().cleanup();
+    super.onDestroy();
+  }
 
   /**
    * Returns the name of the main component registered from JavaScript. This is used to schedule

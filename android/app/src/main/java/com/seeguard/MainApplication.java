@@ -13,6 +13,7 @@ import java.util.Arrays;
 import java.util.List;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.company.netsdk.module.IPLoginModulePackage;
+import com.company.netsdk.module.DeviceSearchPackage;
 
 
 public class MainApplication extends Application implements ReactApplication {
@@ -30,7 +31,7 @@ public class MainApplication extends Application implements ReactApplication {
                     // Packages that cannot be autolinked yet can be added manually here, for example:
                     // packages.add(new MyReactNativePackage())
                     packages.add(new IPLoginModulePackage());
-
+                    packages.add(new DeviceSearchPackage());
 
                     return packages;
                 }

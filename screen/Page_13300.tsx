@@ -5,11 +5,25 @@ import { deviceDataContext } from '../App';
 const Page_13300 = ({ navigation }) => {
   const { deviceData, setDeviceData } = useContext(deviceDataContext);
   const [deviceInfo, setDeviceInfo] = useState([]);
+  const { DeviceSearchModule } = NativeModules;
 
-    // Function to handle device click
-     const handleDeviceClick = (info) => {
-       navigation.navigate('Page_13100', { info });
-     };
+  useEffect(() => {
+      // Start device search when the component mounts
+      DeviceSearchModule.startSearchDevices();
+      // Listen for the DeviceSearchComplete event
+      const deviceSearchListener = DeviceEventEmitter.addListener('DeviceSearchComplete', handleDeviceSearchComplete);
+
+      // Stop device search and remove the event listener when the component unmounts
+      return () => {
+      console.log('DeviceSearch End');
+      DeviceSearchModule.stopSearchDevices();
+      deviceSearchListener.remove();
+      };
+    }, []);
+
+    const handleDeviceSearchComplete = (device) => {
+      setDeviceInfo(prevDeviceInfos => [...prevDeviceInfos, device]);
+    };
 
 
   return (
@@ -22,13 +36,11 @@ const Page_13300 = ({ navigation }) => {
         <Text style={styles.text1}>추가할 장치를 선택해 주세요.</Text>
         <Text style={styles.text1}>{'\n'}{deviceInfo}</Text>
         <View style={styles.container1}>
-          {deviceInfo.map((info, index) => (
-            <TouchableOpacity key={index} onPress={() => handleDeviceClick(info)}>
-              <View key={index} style={styles.deviceContainer}>
-                <Text style={styles.deviceText}>SN: {info.sn}{'\n'}IP: {info.ip} </Text>
-              </View>
-            </TouchableOpacity>
-          ))}
+           {deviceInfo.map((info, index) => (
+                      <Text key={index} style={styles.deviceText}>
+                        SN: {info.sn}{'\n'}IP: {info.ip}
+                      </Text>
+                    ))}
         </View>
       </View>
     </ScrollView>
