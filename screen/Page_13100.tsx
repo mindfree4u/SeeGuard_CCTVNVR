@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { View, Text, NativeModules, TextInput, StyleSheet, ScrollView, Image, ImageBackground, TouchableOpacity } from 'react-native';
+import { View, Text, NativeModules, TextInput, StyleSheet, ScrollView, Image, Alert, ImageBackground, TouchableOpacity } from 'react-native';
 import { useRoute } from '@react-navigation/native';
 import { deviceDataContext } from '../App';
 
@@ -16,7 +16,7 @@ const Page_13100 = ({ navigation, route }) => {
   const { IPLoginModule } = NativeModules;
 
   // 추가 버튼 클릭시 호출됨
-const handleAdd = () => {
+const handleAdd = async () => {
 /*
 const address = '106.250.19.243';
 const port = '37777';
@@ -29,9 +29,14 @@ const password = '1q2w3e4r!@#$';
   const newUsername = email;   // 사용자로부터 입력 받은 아이디
   const newPassword = password; // 사용자로부터 입력 받은 비밀번호
 
-  IPLoginModule.login(newAddress, newPort, newUsername, newPassword);
-
-navigation.navigate('Page_10000');
+  try {
+      await IPLoginModule.login(newAddress, newPort, newUsername, newPassword);
+      Alert.alert('', '장치가 추가되었습니다.', [{ text: '확인' }]);
+      navigation.navigate('Page_10000');
+    } catch (error) {
+      console.error('Login failed:', error);
+      setErrorMessage('로그인에 실패했습니다.'); // Set an error message in case of login failure
+    }
   };
 
 
