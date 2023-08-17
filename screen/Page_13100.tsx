@@ -16,29 +16,34 @@ const Page_13100 = ({ navigation, route }) => {
   const { IPLoginModule } = NativeModules;
 
   // 추가 버튼 클릭시 호출됨
-const handleAdd = async () => {
+const handleAdd =() => {
 /*
-const address = '106.250.19.243';
-const port = '37777';
-const username = 'admin';
-const password = '1q2w3e4r!@#$';
+const newAddress = '106.250.19.243';
+const newPort = '37777';
+const newUsername = 'admin';
+const newPassword = '1q2w3e4r!@#$';
 */
   const newAddress = address; // 사용자로부터 입력 받은 주소
   //const newPort = portNum !== '' ? parseInt(portNum) : 0;
   const newPort = '37777';
   const newUsername = email;   // 사용자로부터 입력 받은 아이디
-  const newPassword = password; // 사용자로부터 입력 받은 비밀번호
+  const newPassword = password;
 
-  try {
-      await IPLoginModule.login(newAddress, newPort, newUsername, newPassword);
-      Alert.alert('', '장치가 추가되었습니다.', [{ text: '확인' }]);
-      navigation.navigate('Page_10000');
-    } catch (error) {
-      console.error('Login failed:', error);
-      setErrorMessage('로그인에 실패했습니다.'); // Set an error message in case of login failure
-    }
-  };
 
+     IPLoginModule.login(newAddress, newPort, newUsername, newPassword)
+         .then(loginResult => {
+           if (loginResult) {
+             Alert.alert('', '장치가 추가되었습니다.', [{ text: '확인' }]);
+             navigation.navigate('Page_10000');
+           } else {
+             setErrorMessage('로그인에 실패했습니다.');
+           }
+         })
+         .catch(error => {
+           console.error(error);
+           setErrorMessage('로그인 도중 오류가 발생했습니다.');
+         });
+      };
 
   return (
     <ScrollView>
