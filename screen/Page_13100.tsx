@@ -17,14 +17,19 @@ const Page_13100 = ({ navigation, route }) => {
 
   // 추가 버튼 클릭시 호출됨
 const handleAdd = () => {
-
+/*
 const address = '106.250.19.243';
 const port = '37777';
 const username = 'admin';
 const password = '1q2w3e4r!@#$';
+*/
+  const newAddress = address; // 사용자로부터 입력 받은 주소
+  //const newPort = portNum !== '' ? parseInt(portNum) : 0;
+  const newPort = '37777';
+  const newUsername = email;   // 사용자로부터 입력 받은 아이디
+  const newPassword = password; // 사용자로부터 입력 받은 비밀번호
 
-IPLoginModule.login(address, port, username, password);
-
+  IPLoginModule.login(newAddress, newPort, newUsername, newPassword);
 
 navigation.navigate('Page_10000');
   };
