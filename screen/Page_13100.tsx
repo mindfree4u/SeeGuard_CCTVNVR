@@ -23,7 +23,7 @@ const newPort = '37777';
 const newUsername = 'admin';
 const newPassword = '1q2w3e4r!@#$';
 */
-  const newAddress = address; // 사용자로부터 입력 받은 주소
+  const newAddress = address;    // 사용자로부터 입력 받은 주소
   //const newPort = portNum !== '' ? parseInt(portNum) : 0;
   const newPort = '37777';
   const newUsername = email;   // 사용자로부터 입력 받은 아이디
@@ -35,13 +35,10 @@ const newPassword = '1q2w3e4r!@#$';
            if (loginResult) {
              Alert.alert('', '장치가 추가되었습니다.', [{ text: '확인' }]);
              navigation.navigate('Page_10000');
-           } else {
-             setErrorMessage('로그인에 실패했습니다.');
            }
          })
          .catch(error => {
-           console.error(error);
-           setErrorMessage('로그인 도중 오류가 발생했습니다.');
+           setErrorMessage('장치 추가에 실패하였습니다');
          });
       };
 
