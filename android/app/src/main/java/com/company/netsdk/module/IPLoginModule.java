@@ -39,11 +39,21 @@ public class IPLoginModule {
     enum LOGIN_TYPE {
         IP, P2P
     }
-
-    public IPLoginModule() {
+    private static IPLoginModule instance;
+   // public IPLoginModule() {
+   private IPLoginModule() {
         mLoginHandle = 0;
         setLoginType(LOGIN_TYPE.IP);
     }
+
+    public static synchronized IPLoginModule getInstance() {
+        if (instance == null) {
+            instance = new IPLoginModule();
+        }
+        return instance;
+    }
+
+
 
     public void setLoginType(LOGIN_TYPE type) {
         if (LOGIN_TYPE.IP == type ) {
@@ -90,8 +100,8 @@ public class IPLoginModule {
 
         if (0 == mLoginHandle) {
             mErrorCode = INetSDK.GetLastError();
-         //   ToolKits.writeErrorLog("Failed to Login Device " + address);
-         //   Log.d("login", "Failed to Login Device");
+            //   ToolKits.writeErrorLog("Failed to Login Device " + address);
+            //   Log.d("login", "Failed to Login Device");
             return false;
         }
         mDeviceName = address;
@@ -101,15 +111,16 @@ public class IPLoginModule {
         boolean bPlayRet = INetSDK.SetLocalMode(mLoginHandle, EM_LOCAL_MODE.EM_LOCAL_PLAY_FLAG_MODE, nPlayValue);
         if(bPlayRet == false)
         {
-         //   ToolKits.writeLog("SetLocalMode-EM_LOCAL_PLAY_FLAG_MODE failed,nPlayValue:" + nPlayValue + "LastError:" + INetSDK.GetLastError());
+            //   ToolKits.writeLog("SetLocalMode-EM_LOCAL_PLAY_FLAG_MODE failed,nPlayValue:" + nPlayValue + "LastError:" + INetSDK.GetLastError());
         }
         //设置回放优化模式，建议使用
         int nPlaybackValue = 0x01;
         boolean bPlaybackRet = INetSDK.SetLocalMode(mLoginHandle, EM_LOCAL_MODE.EM_LOCAL_PLAYBACK_FLAG_MODE, nPlaybackValue);
         if(bPlaybackRet == false)
         {
-         //   ToolKits.writeLog("SetLocalMode-EM_LOCAL_PLAYBACK_FLAG_MODE failed,nPlaybackValue：" + nPlaybackValue + "LastError:" + INetSDK.GetLastError());
+            //   ToolKits.writeLog("SetLocalMode-EM_LOCAL_PLAYBACK_FLAG_MODE failed,nPlaybackValue：" + nPlaybackValue + "LastError:" + INetSDK.GetLastError());
         }
+        Log.d("IP login", "mLoginHandle:"+ mLoginHandle);
         return true;
     }
 

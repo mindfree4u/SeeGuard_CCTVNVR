@@ -44,6 +44,18 @@
         </intent-filter>
       </activity>
 
+        <activity
+            android:name=".LivePreviewActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="company" android:host="LivePreview" />
+            </intent-filter>
+        </activity>
+
+
         <uses-library android:name="org.apache.http.legacy" android:required="false" />
 
     </application>

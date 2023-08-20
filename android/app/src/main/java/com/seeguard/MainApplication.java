@@ -33,6 +33,7 @@ public class MainApplication extends Application implements ReactApplication {
                     packages.add(new IPLoginModulePackage());
                     packages.add(new DeviceSearchPackage());
 
+
                     return packages;
                 }
 

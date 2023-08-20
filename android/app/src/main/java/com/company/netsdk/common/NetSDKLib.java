@@ -64,12 +64,12 @@ public final class NetSDKLib {
         boolean bRet = INetSDK.SetOptimizeMode(EM_OPTIMIZE_TYPE.EM_OPT_TYPE_MOBILE_OPTION, pParam);
         if(bRet == false)
         {
-          //  ToolKits.writeLog("SetOptimizeMode-EM_OPT_TYPE_MOBILE_OPTION failed,pParam:" + pParam + "LastError:" + INetSDK.GetLastError());
+            //  ToolKits.writeLog("SetOptimizeMode-EM_OPT_TYPE_MOBILE_OPTION failed,pParam:" + pParam + "LastError:" + INetSDK.GetLastError());
         }
         /// Set Reconnect callback.
         /// 设置断线重连回调 : 当app重新连接上设备时，会触发该回调;
         /// 此处默认不使用
-         INetSDK.SetAutoReconnect(mReconnect);
+        INetSDK.SetAutoReconnect(mReconnect);
 
         /// Close the SDK Log
         // closeSDKLog();
@@ -92,7 +92,7 @@ public final class NetSDKLib {
         logInfo.nPrintStrategy = 1; // 0 - Saved as file. 1 - show log in the console.
         logInfo.bSetFilePath = true;
         System.arraycopy(logFile.getBytes(), 0, logInfo.szLogFilePath, 0, logFile.length());
-      //  ToolKits.writeLog("logopen");
+        //  ToolKits.writeLog("logopen");
         return INetSDK.LogOpen(logInfo);
     }
     /// Cleanup NetSDK library's resources.
@@ -143,13 +143,13 @@ public final class NetSDKLib {
         @Override
         public void invoke(long loginHandle, String deviceIp, int devicePort) {
             Log.d(TAG, "Device " + deviceIp + " is disConnected !");
-          //  ToolKits.writeLog("Device " + deviceIp + " is disConnected !");
-           // mHandler.post(new Runnable() {
+            //  ToolKits.writeLog("Device " + deviceIp + " is disConnected !");
+            // mHandler.post(new Runnable() {
             //    @Override
             //    public void run() {
-             //       ToolKits.alertDisconnected();
+            //       ToolKits.alertDisconnected();
             //    }
-         //   });
+            //   });
         }
     }
 
@@ -159,7 +159,7 @@ public final class NetSDKLib {
         @Override
         public void invoke(long loginHandle, String deviceIp, int devicePort) {
             Log.d(TAG, "Device " + deviceIp + " is reconnect !");
-         //   ToolKits.writeLog("Device " + deviceIp + " is reconnect !");
+            //   ToolKits.writeLog("Device " + deviceIp + " is reconnect !");
         }
     }
 

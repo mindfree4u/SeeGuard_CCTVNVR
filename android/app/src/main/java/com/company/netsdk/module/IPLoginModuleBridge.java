@@ -20,7 +20,8 @@ public class IPLoginModuleBridge extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void login(String address, String port, String username, String password, Promise promise) {
-        IPLoginModule ipLoginModule = new IPLoginModule();
+        //IPLoginModule ipLoginModule = new IPLoginModule();
+        IPLoginModule ipLoginModule = IPLoginModule.getInstance();
         boolean loginResult = ipLoginModule.login(address, port, username, password);
 
         if (loginResult) {
@@ -35,7 +36,8 @@ public class IPLoginModuleBridge extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void logout() {
-        IPLoginModule ipLoginModule = new IPLoginModule();
+       // IPLoginModule ipLoginModule = new IPLoginModule();
+        IPLoginModule ipLoginModule = IPLoginModule.getInstance();
         ipLoginModule.logout();
     }
 
