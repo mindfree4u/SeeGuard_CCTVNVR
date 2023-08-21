@@ -27,6 +27,7 @@ import java.util.Map;
 public class LivePreviewModule {
     private static final String TAG = LivePreviewModule.class.getSimpleName();
     private final int STREAM_BUF_SIZE = 1024*1024*2;
+    //private final int STREAM_BUF_SIZE = 1080*1920;
     private final int RAW_AUDIO_VIDEO_MIX_DATA = 0; ///原始音视频混合数据;  ///Raw audio and video mixing data.
     long mRealHandle = 0;
     static Context mContext;
@@ -45,11 +46,11 @@ public class LivePreviewModule {
 
     public LivePreviewModule(Context context){
         this.mContext = context;
-       res = mContext.getResources();
+        res = mContext.getResources();
         mPlayPort = IPlaySDK.PLAYGetFreePort();
         isOpenSound = true;
         isDelayPlay = false;
-   //   sdkApp = ((NetSDKApplication)((AppCompatActivity)mContext).getApplication());
+      //  sdkApp = ((NetSDKApplication)((AppCompatActivity)mContext).getApplication());
         initMap();
     }
 
@@ -58,82 +59,78 @@ public class LivePreviewModule {
     private void initMap(){
         streamTypeMap.put(0,SDK_RealPlayType.SDK_RType_Realplay_0);
         streamTypeMap.put(1,SDK_RealPlayType.SDK_RType_Realplay_1);
-    }
+    }/*
     ///视频预览前设置
     public boolean prePlay(SurfaceView sv){
-        boolean isOpened = IPlaySDK.PLAYOpenStream(mPlayPort,null,0,STREAM_BUF_SIZE) == 0 ? false:true;
-        if(!isOpened) {
-            Log.d(TAG,"OpenStream Failed");
-            return false;
-        }
-        boolean isPlayin = IPlaySDK.PLAYPlay(mPlayPort,sv) == 0 ? false : true;
-        if (!isPlayin) {
-            Log.d(TAG,"PLAYPlay Failed");
-            IPlaySDK.PLAYCloseStream(mPlayPort);
-            return false;
-        }
-
-        if (isOpenSound) {
-            boolean isSuccess = IPlaySDK.PLAYPlaySoundShare(mPlayPort) == 0 ? false : true;
-            if (!isSuccess) {
-                Log.d(TAG, "SoundShare Failed");
-                IPlaySDK.PLAYStop(mPlayPort);
+            boolean isOpened = IPlaySDK.PLAYOpenStream(mPlayPort,null,0,STREAM_BUF_SIZE) == 0 ? false:true;
+            Log.d("prePlay","isOpened" + isOpened);
+            if(!isOpened) {
+                Log.d(TAG,"OpenStream Failed");
+                return false;
+            }
+            boolean isPlayin = IPlaySDK.PLAYPlay(mPlayPort,sv) == 0 ? false : true;
+            Log.d("prePlay","isPlayin" + isPlayin);
+            if (!isPlayin) {
+                Log.d(TAG,"PLAYPlay Failed");
                 IPlaySDK.PLAYCloseStream(mPlayPort);
                 return false;
             }
-            if (-1 == mCurVolume) {
-                mCurVolume = IPlaySDK.PLAYGetVolume(mPlayPort);
-            } else {
-                IPlaySDK.PLAYSetVolume(mPlayPort, mCurVolume);
+
+
+
+
+        public long getHandle(){
+            return this.mRealHandle;
+        }
+
+        public int getPlayPort(){
+            return this.mPlayPort;
+        }
+
+        public void setOpenSound(boolean isOpenSound) {
+            this.isOpenSound = isOpenSound;
+        }
+
+        public void setDelayPlay(boolean isDelayPlay) {
+            this.isDelayPlay = isDelayPlay;
+        }
+*/
+        ///开始预览视频
+        public void startPlay(int channel,int streamType,final SurfaceView view){
+            Log.d(TAG,"StreamTpye: "+streamTypeMap.get(streamType));
+
+            boolean isOpened = IPlaySDK.PLAYOpenStream(mPlayPort,null,0,STREAM_BUF_SIZE) == 0 ? false:true;
+            Log.d("prePlay","isOpened" + isOpened);
+            if(!isOpened) {
+                Log.d(TAG,"OpenStream Failed");
+
             }
-        }
 
-        if (isDelayPlay) {
-            if (IPlaySDK.PLAYSetDelayTime(mPlayPort, 500/*ms*/, 1000/*ms*/) == 0) {
-                Log.d(TAG,"SetDelayTime Failed");
+            boolean isPlayin = IPlaySDK.PLAYPlay(mPlayPort,view) == 0 ? false : true;
+            Log.d("prePlay","isPlayin" + isPlayin);
+            if (!isPlayin) {
+                Log.d(TAG,"PLAYPlay Failed");
+                IPlaySDK.PLAYCloseStream(mPlayPort);
+
             }
-        }
 
-        return true;
-    }
 
-    public long getHandle(){
-        return this.mRealHandle;
-    }
+            IPLoginModule ipLoginModule = IPLoginModule.getInstance(); // 싱글톤 인스턴스 가져옴
+            long loginHandle = ipLoginModule.getLoginHandle(); // 로그인 핸들 값 가져옴
+            //mRealHandle = INetSDK.RealPlayEx(sdkApp.getLoginHandle(),channel,streamTypeMap.get(streamType));
+            Log.d("LivePreview", "mLoginHandle:"+ loginHandle);
+            mRealHandle = INetSDK.RealPlayEx(loginHandle,channel,streamTypeMap.get(streamType));
+            Log.d("LivePreview", "mRealHandle:"+ mRealHandle);
+            if (mRealHandle == 0){
+                //   ToolKits.writeErrorLog("RealPlayEx failed!");
+                return;
+            }
 
-    public int getPlayPort(){
-        return this.mPlayPort;
-    }
+            Log.d("prePlay","isOpened" + isOpened);
+            Log.d("prePlay","isPlayin" + isPlayin);
 
-    public void setOpenSound(boolean isOpenSound) {
-        this.isOpenSound = isOpenSound;
-    }
 
-    public void setDelayPlay(boolean isDelayPlay) {
-        this.isDelayPlay = isDelayPlay;
-    }
-
-    ///开始预览视频
-    public void startPlay(int channel,int streamType,final SurfaceView view){
-        Log.d(TAG,"StreamTpye: "+streamTypeMap.get(streamType));
-        IPLoginModule ipLoginModule = IPLoginModule.getInstance(); // 싱글톤 인스턴스 가져옴
-        long loginHandle = ipLoginModule.getLoginHandle(); // 로그인 핸들 값 가져옴
-        //mRealHandle = INetSDK.RealPlayEx(sdkApp.getLoginHandle(),channel,streamTypeMap.get(streamType));
-        Log.d("LivePreview", "mLoginHandle:"+ loginHandle);
-        mRealHandle = INetSDK.RealPlayEx(loginHandle,channel,streamTypeMap.get(streamType));
-        Log.d("LivePreview", "mRealHandle:"+ mRealHandle);
-        if (mRealHandle == 0){
-         //   ToolKits.writeErrorLog("RealPlayEx failed!");
-            return;
-        }
-
-        if (!prePlay( view)) {
-            Log.d(TAG,"prePlay returned false..");
-            INetSDK.StopRealPlayEx(mRealHandle);
-            return;
-        }
-
-        if (mRealHandle!=0){
+            if (mRealHandle!=0){
             mRealDataCallBackEx = new CB_fRealDataCallBackEx() {
                 @Override
                 public void invoke(long rHandle, int dataType, byte[] buffer, int bufSize, int param) {

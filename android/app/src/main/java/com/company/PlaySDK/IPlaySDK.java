@@ -21,6 +21,7 @@ public class IPlaySDK
 		{
 			try
 			{
+
 				System.loadLibrary(lib);
 			}
 			catch(UnsatisfiedLinkError ulink)

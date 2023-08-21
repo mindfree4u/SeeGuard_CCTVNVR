@@ -45,7 +45,7 @@
       </activity>
 
         <activity
-            android:name=".LivePreviewActivity"
+            android:name="com.company.netsdk.activity.LivePreviewActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
