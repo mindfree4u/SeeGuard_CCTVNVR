@@ -13,7 +13,10 @@ const Intro_10000 = ({ navigation }) => {
   // 로그인 버튼 클릭시 호출됨
   const handleLogin = () => {
        // Check if email and password are valid
-       // if (email === 'rhdy75@gmail.com' && password === '1234') {
+  const NewEmail = email
+  const NewPassword = password
+  
+       // if (email === NewEmail && password === NewPassword) {
           // If valid, log the user in
           navigation.navigate('Page_10000');
           console.log('login successfully');

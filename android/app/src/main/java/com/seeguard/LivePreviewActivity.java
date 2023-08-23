@@ -27,6 +27,7 @@ public class LivePreviewActivity extends Activity implements SurfaceHolder.Callb
 
         mLiveModule.initSurfaceView(mRealView);
         mLiveModule.startPlay(0,0,mRealView);
+        mLiveModule.startPlay(2,1,mRealView);   // JSH
     }
 
     @Override
